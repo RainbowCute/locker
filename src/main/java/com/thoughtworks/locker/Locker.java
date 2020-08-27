@@ -8,6 +8,9 @@ public class Locker {
     }
 
     public Ticket save(Bag bag) {
+        if(capacity <= 0) {
+            throw new FullCapacityException("容量已满");
+        }
         return new Ticket();
     }
 }

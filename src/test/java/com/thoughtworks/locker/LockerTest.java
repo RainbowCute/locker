@@ -1,17 +1,25 @@
 package com.thoughtworks.locker;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class LockerTest {
     @Test
-    void should_return_ticket_when_save_bag_given_locker_with_10_free_capacity() {
+    public void should_return_ticket_when_save_bag_given_locker_with_10_free_capacity() {
         Locker locker = new Locker(10);
         Bag bag = new Bag();
 
         Ticket ticket = locker.save(bag);
 
         assertNotNull(ticket);
+    }
+
+    @Test(expected = FullCapacityException.class)
+    public void should_throw_capacity_is_full_exception_when_save_bag_given_locker_with_0_free_capacity() {
+        Locker locker = new Locker(0);
+        Bag bag = new Bag();
+
+        locker.save(bag);
     }
 }
