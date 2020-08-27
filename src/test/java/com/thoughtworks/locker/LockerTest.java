@@ -35,11 +35,21 @@ public class LockerTest {
         assertEquals(bag, takenBag);
     }
 
-    @Test(expected = IllegalTicketException.class)
-    public void should_throw_ticket_is_illegal_exception_when_take_bag_given_illegal_ticket() {
+    @Test(expected = TicketInvalidException.class)
+    public void should_throw_ticket_is_illegal_exception_when_take_bag_given_locker_and_illegal_ticket() {
         Locker locker = new Locker();
 
         locker.take(new Ticket());
 
+    }
+
+    @Test(expected = TicketInvalidException.class)
+    public void should_throw_ticket_invalid_exception_when_take_bag_given_locker_and_reused_ticket() {
+        Locker locker = new Locker(1);
+        Bag bag = new Bag();
+        Ticket ticket = locker.save(bag);
+        locker.take(ticket);
+
+        locker.take(ticket);
     }
 }

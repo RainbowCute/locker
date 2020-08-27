@@ -29,8 +29,9 @@ public class Locker {
     public Bag take(Ticket ticket) {
         Bag bag = ticketBagMap.get(ticket);
         if(Objects.isNull(bag)) {
-            throw new IllegalTicketException("非法票据");
+            throw new TicketInvalidException("无效票据");
         }
+        ticketBagMap.remove(ticket);
         return bag;
     }
 }
