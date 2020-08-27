@@ -1,8 +1,8 @@
-1.given 储物柜可用capacity=10
+1.given 储物柜可用capacity=10，待存的包
 when 存包
 then 返回票据
 
-2.given 储物柜可用capacity=0
+2.given 储物柜可用capacity=0，待存的包
 when 存包
 then 容量已满
 
