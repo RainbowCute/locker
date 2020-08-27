@@ -34,4 +34,12 @@ public class LockerTest {
 
         assertEquals(bag, takenBag);
     }
+
+    @Test(expected = IllegalTicketException.class)
+    public void should_throw_ticket_is_illegal_exception_when_take_bag_given_illegal_ticket() {
+        Locker locker = new Locker();
+
+        locker.take(new Ticket());
+
+    }
 }
