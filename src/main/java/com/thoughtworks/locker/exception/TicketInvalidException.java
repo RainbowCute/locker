@@ -1,4 +1,4 @@
-package com.thoughtworks.locker;
+package com.thoughtworks.locker.exception;
 
 public class TicketInvalidException extends RuntimeException {
 

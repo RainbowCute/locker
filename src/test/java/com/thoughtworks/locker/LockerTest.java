@@ -1,5 +1,7 @@
 package com.thoughtworks.locker;
 
+import com.thoughtworks.locker.exception.FullCapacityException;
+import com.thoughtworks.locker.exception.TicketInvalidException;
 import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
