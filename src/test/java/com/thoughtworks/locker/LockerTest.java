@@ -2,6 +2,7 @@ package com.thoughtworks.locker;
 
 import org.junit.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class LockerTest {
@@ -21,5 +22,16 @@ public class LockerTest {
         Bag bag = new Bag();
 
         locker.save(bag);
+    }
+
+    @Test
+    public void should_take_bag_successfully_when_take_bag_given_locker_with_10_capacity_and_valid_ticket() {
+        Locker locker = new Locker(10);
+        Bag bag = new Bag();
+        Ticket ticket = locker.save(bag);
+
+        Bag takenBag = locker.take(ticket);
+
+        assertEquals(bag, takenBag);
     }
 }

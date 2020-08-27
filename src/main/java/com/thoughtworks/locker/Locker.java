@@ -1,16 +1,27 @@
 package com.thoughtworks.locker;
 
-public class Locker {
-    private int capacity;
+import java.util.HashMap;
+import java.util.Map;
 
-    public Locker(int capacity) {
-        this.capacity = capacity;
+public class Locker {
+    private final int freeCapacity;
+    private final Map<Ticket, Bag> ticketBagMap = new HashMap<>();
+
+    public Locker(int freeCapacity) {
+        this.freeCapacity = freeCapacity;
     }
 
     public Ticket save(Bag bag) {
-        if(capacity <= 0) {
+        if(freeCapacity <= 0) {
             throw new FullCapacityException("容量已满");
         }
-        return new Ticket();
+
+        Ticket ticket = new Ticket();
+        ticketBagMap.put(ticket, bag);
+        return ticket;
+    }
+
+    public Bag take(Ticket ticket) {
+        return ticketBagMap.get(ticket);
     }
 }
