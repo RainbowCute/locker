@@ -20,10 +20,10 @@ public class LockerTest {
 
     @Test(expected = FullCapacityException.class)
     public void should_throw_capacity_is_full_exception_when_save_bag_given_locker_with_0_free_capacity() {
-        Locker locker = new Locker(0);
-        Bag bag = new Bag();
+        Locker locker = new Locker(1);
+        locker.save(new Bag());
 
-        locker.save(bag);
+        locker.save(new Bag());
     }
 
     @Test

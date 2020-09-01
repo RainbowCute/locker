@@ -26,12 +26,13 @@ public class Locker {
 
         Ticket ticket = new Ticket();
         ticketBagMap.put(ticket, bag);
+        freeCapacity--;
         return ticket;
     }
 
     public Bag take(Ticket ticket) {
         Bag bag = ticketBagMap.get(ticket);
-        if(Objects.isNull(bag)) {
+        if (Objects.isNull(bag)) {
             throw new TicketInvalidException("无效票据");
         }
         ticketBagMap.remove(ticket);
