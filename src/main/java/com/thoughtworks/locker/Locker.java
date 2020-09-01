@@ -5,7 +5,6 @@ import com.thoughtworks.locker.exception.TicketInvalidException;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class Locker {
     private int freeCapacity;
@@ -31,10 +30,11 @@ public class Locker {
     }
 
     public Bag take(Ticket ticket) {
-        Bag bag = ticketBagMap.get(ticket);
-        if (Objects.isNull(bag)) {
+        if (!isExist(ticket)) {
             throw new TicketInvalidException("无效票据");
         }
+
+        Bag bag = ticketBagMap.get(ticket);
         ticketBagMap.remove(ticket);
         freeCapacity++;
         return bag;
