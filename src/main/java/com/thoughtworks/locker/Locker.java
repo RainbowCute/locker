@@ -20,7 +20,7 @@ public class Locker {
     }
 
     public Ticket save(Bag bag) {
-        if (freeCapacity <= 0) {
+        if (!isNotFull()) {
             throw new FullCapacityException("储物柜已满");
         }
 
@@ -37,5 +37,9 @@ public class Locker {
         }
         ticketBagMap.remove(ticket);
         return bag;
+    }
+
+    public boolean isNotFull() {
+        return freeCapacity > 0;
     }
 }

@@ -1,5 +1,7 @@
 package com.thoughtworks.locker;
 
+import com.thoughtworks.locker.exception.FullCapacityException;
+
 import java.util.List;
 
 public class PrimaryLockerRobot {
@@ -10,9 +12,10 @@ public class PrimaryLockerRobot {
     }
 
     public Ticket save(Bag bag) {
-        for (Locker locker : lockers) {
-            return locker.save(bag);
-        }
-        return null;
+        return lockers.stream()
+                .filter(Locker::isNotFull)
+                .findFirst()
+                .map(locker -> locker.save(bag))
+                .orElseThrow(() -> new FullCapacityException("储物柜已满"));
     }
 }
