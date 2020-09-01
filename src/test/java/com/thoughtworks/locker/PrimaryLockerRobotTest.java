@@ -56,4 +56,16 @@ public class PrimaryLockerRobotTest {
         assertNotNull(ticket);
         assertEquals(bag, secondLocker.take(ticket));
     }
+
+    @Test(expected = FullCapacityException.class)
+    public void should_throw_full_capacity_exception_when_save_bag_given_primary_locker_robot_and_two_locker_are_full_and_bag() {
+        Locker firstLocker = new Locker(1);
+        Locker secondLocker = new Locker(1);
+        firstLocker.save(new Bag());
+        secondLocker.save(new Bag());
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(Arrays.asList(firstLocker, secondLocker));
+        Bag bag = new Bag();
+
+        primaryLockerRobot.save(bag);
+    }
 }
