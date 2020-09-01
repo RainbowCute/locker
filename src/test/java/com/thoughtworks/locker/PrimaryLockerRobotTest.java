@@ -14,7 +14,7 @@ public class PrimaryLockerRobotTest {
     @Test
     public void should_return_ticket_when_save_bag_given_primary_locker_robot_manage_one_locker_with_10_free_capacity_and_bag() {
         Locker locker = new Locker(10);
-        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(Arrays.asList(locker));
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(Collections.singletonList(locker));
         Bag bag = new Bag();
 
         Ticket ticket = primaryLockerRobot.save(bag);
@@ -25,7 +25,7 @@ public class PrimaryLockerRobotTest {
     @Test(expected = FullCapacityException.class)
     public void should_throw_full_capacity_exception_when_save_bag_given_primary_locker_robot_manage_one_locker_with_0_free_capacity_and_bag() {
         Locker locker = new Locker(1);
-        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(Arrays.asList(locker));
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(Collections.singletonList(locker));
         primaryLockerRobot.save(new Bag());
         Bag bag = new Bag();
 
