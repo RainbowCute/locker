@@ -17,3 +17,32 @@ then 票据无效
 5.given 储物柜 重复ticket
 when 取包
 then 票据无效
+
+---
+1.Given：PrimaryLockerRobot管理1个储物柜，储物柜有空位freeCapacity=10，待存的包
+When：robot存包
+Then：返回一张票
+
+2.Given：PrimaryLockerRobot管理1个储物柜，储物柜没有空位，待存的包
+When：robot存包
+Then：提示储物柜已满，不能存包
+
+3.Given：PrimaryLockerRobot管理2个储物柜，第1个储物柜有空位freeCapacity=10，第2个储物柜有空位freeCapacity=10，待存的包
+When：robot存包
+Then：返回一张票，并且存在第1个储物柜中
+
+4.Given：PrimaryLockerRobot管理2个储物柜，第1个储物柜没有空位，第2个储物柜有空位freeCapacity=10，待存的包
+When：robot存包
+Then：返回一张票，并且存在第2个储物柜中
+
+5.Given：PrimaryLockerRobot管理2个储物柜，第1个储物柜没有空位，第2个储物柜也没有空位，待存的包
+When：robot存包
+Then：提示储物柜已满，不能存包
+
+6.Given：PrimaryLockerRobot管理1个储物柜，票
+When：robot取包
+Then：返回票对应的包
+
+7.Given：PrimaryLockerRobot管理1个储物柜，伪造的票
+When：robot取包
+Then：提示票无效
