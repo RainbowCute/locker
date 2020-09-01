@@ -54,4 +54,16 @@ public class LockerTest {
 
         locker.take(ticket);
     }
+
+    @Test
+    public void should_return_ticket_when_save_bag_given_a_full_locker_then_take_bag_and_new_bag() {
+        Locker locker = new Locker(1);
+        Ticket ticket = locker.save(new Bag());
+        locker.take(ticket);
+        Bag bag = new Bag();
+
+        Ticket otherTicket = locker.save(bag);
+
+        assertNotNull(otherTicket);
+    }
 }

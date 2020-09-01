@@ -36,6 +36,7 @@ public class Locker {
             throw new TicketInvalidException("无效票据");
         }
         ticketBagMap.remove(ticket);
+        freeCapacity++;
         return bag;
     }
 
