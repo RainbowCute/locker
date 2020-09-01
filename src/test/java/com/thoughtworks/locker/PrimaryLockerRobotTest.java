@@ -4,6 +4,7 @@ import com.thoughtworks.locker.exception.FullCapacityException;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -67,5 +68,17 @@ public class PrimaryLockerRobotTest {
         Bag bag = new Bag();
 
         primaryLockerRobot.save(bag);
+    }
+
+    @Test
+    public void should_return_bag_when_take_bag_given_primary_locker_robot_and_one_locker_with_10_capacity_and_valid_ticket() {
+        Locker locker = new Locker(10);
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(Collections.singletonList(locker));
+        Bag bag = new Bag();
+        Ticket ticket = primaryLockerRobot.save(bag);
+
+        Bag takenBag = primaryLockerRobot.take(ticket);
+
+        assertEquals(bag, takenBag);
     }
 }

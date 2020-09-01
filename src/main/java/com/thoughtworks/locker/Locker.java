@@ -42,4 +42,8 @@ public class Locker {
     public boolean isNotFull() {
         return freeCapacity > 0;
     }
+
+    public boolean isExist(Ticket ticket) {
+        return ticketBagMap.containsKey(ticket);
+    }
 }
