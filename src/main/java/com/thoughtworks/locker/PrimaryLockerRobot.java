@@ -1,13 +1,18 @@
 package com.thoughtworks.locker;
 
-public class PrimaryLockerRobot {
-    private Locker locker;
+import java.util.List;
 
-    public PrimaryLockerRobot(Locker locker) {
-        this.locker = locker;
+public class PrimaryLockerRobot {
+    private final List<Locker> lockers;
+
+    public PrimaryLockerRobot(List<Locker> lockers) {
+        this.lockers = lockers;
     }
 
     public Ticket save(Bag bag) {
-        return locker.save(bag);
+        for (Locker locker : lockers) {
+            return locker.save(bag);
+        }
+        return null;
     }
 }
