@@ -1,3 +1,4 @@
+--- locker
 1.given 储物柜可用capacity=10，待存的包
 when 存包
 then 返回票据
@@ -18,7 +19,7 @@ then 票据无效
 when 取包
 then 票据无效
 
----
+--- primary locker robot
 1.Given：PrimaryLockerRobot管理1个储物柜，储物柜有空位freeCapacity=10，待存的包
 When：robot存包
 Then：返回一张票
