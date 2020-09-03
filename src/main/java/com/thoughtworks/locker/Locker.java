@@ -7,41 +7,35 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Locker {
-    private int freeCapacity;
+    private final int capacity;
     private final Map<Ticket, Bag> ticketBagMap = new HashMap<>();
 
-    public Locker(int freeCapacity) {
-        this.freeCapacity = freeCapacity;
-    }
-
-    public Locker() {
-
+    public Locker(int capacity) {
+        this.capacity = capacity;
     }
 
     public Ticket save(Bag bag) {
         if (!isNotFull()) {
-            throw new FullCapacityException("储物柜已满");
+            throw new FullCapacityException();
         }
 
         Ticket ticket = new Ticket();
         ticketBagMap.put(ticket, bag);
-        freeCapacity--;
         return ticket;
     }
 
     public Bag take(Ticket ticket) {
         if (!isExist(ticket)) {
-            throw new TicketInvalidException("无效票据");
+            throw new TicketInvalidException();
         }
 
         Bag bag = ticketBagMap.get(ticket);
         ticketBagMap.remove(ticket);
-        freeCapacity++;
         return bag;
     }
 
     public boolean isNotFull() {
-        return freeCapacity > 0;
+        return ticketBagMap.size() < capacity;
     }
 
     public boolean isExist(Ticket ticket) {

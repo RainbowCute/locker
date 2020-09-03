@@ -17,7 +17,7 @@ public class PrimaryLockerRobot {
                 .filter(Locker::isNotFull)
                 .findFirst()
                 .map(locker -> locker.save(bag))
-                .orElseThrow(() -> new FullCapacityException("储物柜已满"));
+                .orElseThrow(FullCapacityException::new);
     }
 
     public Bag take(Ticket ticket) {
@@ -25,6 +25,6 @@ public class PrimaryLockerRobot {
                 .filter(locker -> locker.isExist(ticket))
                 .findFirst()
                 .map(locker -> locker.take(ticket))
-                .orElseThrow(() -> new TicketInvalidException("无效票据"));
+                .orElseThrow(TicketInvalidException::new);
     }
 }

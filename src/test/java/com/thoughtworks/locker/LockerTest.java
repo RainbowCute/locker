@@ -39,7 +39,7 @@ public class LockerTest {
 
     @Test(expected = TicketInvalidException.class)
     public void should_throw_ticket_is_illegal_exception_when_take_bag_given_locker_and_illegal_ticket() {
-        Locker locker = new Locker();
+        Locker locker = new Locker(10);
 
         locker.take(new Ticket());
 
