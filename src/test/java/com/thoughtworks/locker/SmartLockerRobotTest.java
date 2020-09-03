@@ -22,7 +22,7 @@ public class SmartLockerRobotTest {
     }
 
     @Test
-    public void should_return_ticket_and_save_bag_in_1st_locker_when_smart_locker_robot_save_bag_given_1st_locker_with_10_capacity_and_2st_with_5_capacity_and_bag() {
+    public void should_return_ticket_and_save_bag_in_1st_locker_when_smart_locker_robot_save_bag_given_1st_locker_with_10_capacity_and_2nd_with_5_capacity_and_bag() {
         Locker firstLocker = new Locker(10);
         Locker secondLocker = new Locker(5);
         SmartLockerRobot smartLockerRobot = new SmartLockerRobot(Arrays.asList(firstLocker, secondLocker));
@@ -32,5 +32,18 @@ public class SmartLockerRobotTest {
 
         assertNotNull(ticket);
         assertEquals(bag, firstLocker.take(ticket));
+    }
+
+    @Test
+    public void should_return_ticket_and_bag_in_2nd_locker_when_smart_locker_robot_save_bag_given_1st_10_capacity_locker_and_2nd_20_capacity_locker_and_bag() {
+        Locker firstLocker = new Locker(10);
+        Locker secondLocker = new Locker(20);
+        SmartLockerRobot smartLockerRobot = new SmartLockerRobot(Arrays.asList(firstLocker, secondLocker));
+        Bag bag = new Bag();
+
+        Ticket ticket = smartLockerRobot.save(bag);
+
+        assertNotNull(ticket);
+        assertEquals(bag, secondLocker.take(ticket));
     }
 }

@@ -41,4 +41,8 @@ public class Locker {
     public boolean isExist(Ticket ticket) {
         return ticketBagMap.containsKey(ticket);
     }
+
+    public int getFreeCapacity() {
+        return capacity - ticketBagMap.size();
+    }
 }

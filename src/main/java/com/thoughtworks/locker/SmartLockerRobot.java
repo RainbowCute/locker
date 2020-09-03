@@ -2,6 +2,7 @@ package com.thoughtworks.locker;
 
 import com.thoughtworks.locker.exception.FullCapacityException;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class SmartLockerRobot {
@@ -14,8 +15,7 @@ public class SmartLockerRobot {
 
     public Ticket save(Bag bag) {
         return lockers.stream()
-                .filter(Locker::isNotFull)
-                .findFirst()
+                .max(Comparator.comparing(Locker::getFreeCapacity))
                 .map(locker -> locker.save(bag))
                 .orElseThrow(FullCapacityException::new);
     }
