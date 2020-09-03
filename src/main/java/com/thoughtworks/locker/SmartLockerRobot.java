@@ -1,6 +1,7 @@
 package com.thoughtworks.locker;
 
 import com.thoughtworks.locker.exception.FullCapacityException;
+import com.thoughtworks.locker.exception.TicketInvalidException;
 
 import java.util.Comparator;
 import java.util.List;
@@ -25,6 +26,6 @@ public class SmartLockerRobot {
                 .filter(locker -> locker.isExist(ticket))
                 .findFirst()
                 .map(locker -> locker.take(ticket))
-                .orElse(null);
+                .orElseThrow(TicketInvalidException::new);
     }
 }

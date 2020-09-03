@@ -1,6 +1,7 @@
 package com.thoughtworks.locker;
 
 import com.thoughtworks.locker.exception.FullCapacityException;
+import com.thoughtworks.locker.exception.TicketInvalidException;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -83,5 +84,14 @@ public class SmartLockerRobotTest {
         Bag takenBag = smartLockerRobot.take(ticket);
 
         assertEquals(bag, takenBag);
+    }
+
+    @Test(expected = TicketInvalidException.class)
+    public void should_throw_ticket_is_invalid_when_smart_locker_robot_take_bag_given_a_locker_invalid_ticket() {
+        Locker locker = new Locker(10);
+        SmartLockerRobot smartLockerRobot = new SmartLockerRobot(Collections.singletonList(locker));
+        smartLockerRobot.save(new Bag());
+
+        smartLockerRobot.take(new Ticket());
     }
 }
