@@ -1,5 +1,6 @@
 package com.thoughtworks.locker;
 
+import com.thoughtworks.locker.exception.FullCapacityException;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -58,5 +59,17 @@ public class SmartLockerRobotTest {
 
         assertNotNull(ticket);
         assertEquals(bag, firstLocker.take(ticket));
+    }
+
+    @Test(expected = FullCapacityException.class)
+    public void should_throw_full_capacity_exception_when_smart_locker_robot_save_bag_given_two_lockers_with_0_free_capacity_and_bag() {
+        Locker firstLocker = new Locker(1);
+        Locker secondLocker = new Locker(1);
+        firstLocker.save(new Bag());
+        secondLocker.save(new Bag());
+        SmartLockerRobot smartLockerRobot = new SmartLockerRobot(Arrays.asList(firstLocker, secondLocker));
+        Bag bag = new Bag();
+
+        smartLockerRobot.save(bag);
     }
 }
