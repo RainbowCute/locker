@@ -72,4 +72,16 @@ public class SmartLockerRobotTest {
 
         smartLockerRobot.save(bag);
     }
+
+    @Test
+    public void should_take_bag_successfully_when_smart_locker_robot_take_bag_given_1_locker_and_valid_ticket() {
+        Locker locker = new Locker(10);
+        SmartLockerRobot smartLockerRobot = new SmartLockerRobot(Collections.singletonList(locker));
+        Bag bag = new Bag();
+        Ticket ticket = smartLockerRobot.save(bag);
+
+        Bag takenBag = smartLockerRobot.take(ticket);
+
+        assertEquals(bag, takenBag);
+    }
 }

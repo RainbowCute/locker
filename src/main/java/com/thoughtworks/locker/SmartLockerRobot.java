@@ -19,4 +19,12 @@ public class SmartLockerRobot {
                 .map(locker -> locker.save(bag))
                 .orElseThrow(FullCapacityException::new);
     }
+
+    public Bag take(Ticket ticket) {
+        return lockers.stream()
+                .filter(locker -> locker.isExist(ticket))
+                .findFirst()
+                .map(locker -> locker.take(ticket))
+                .orElse(null);
+    }
 }
