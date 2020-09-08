@@ -1,5 +1,7 @@
 package com.thoughtworks.locker;
 
+import com.thoughtworks.locker.exception.FullCapacityException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -24,6 +26,6 @@ public class LockerRobotManager {
                              lockers.stream().filter(Locker::isNotFull))
                 .findFirst()
                 .map(locker -> locker.save(bag))
-                .orElse(null);
+                .orElseThrow(FullCapacityException::new);
     }
 }
