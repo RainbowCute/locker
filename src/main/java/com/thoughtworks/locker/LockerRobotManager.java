@@ -19,8 +19,9 @@ public class LockerRobotManager {
 
     public Ticket save(Bag bag) {
         return Stream.concat(robots.stream()
-                .filter(robot -> robot.getAvailableLocker().isPresent())
-                .map(robot -> robot.getAvailableLocker().get()), lockers.stream())
+                                   .filter(robot -> robot.getAvailableLocker().isPresent())
+                                   .map(robot -> robot.getAvailableLocker().get()),
+                             lockers.stream())
                 .findFirst()
                 .map(locker -> locker.save(bag))
                 .orElse(null);

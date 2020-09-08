@@ -82,38 +82,38 @@ when：SmartLockerRobot取包
 then：提示票无效
 
 ---- locker robot manager
-Given：Locker Robot Manager管理1个有可用容量的robot，manager不管理locker，待存的包
+1.Given：Locker Robot Manager管理1个有可用容量的robot，manager不管理locker，待存的包
 When：Locker Robot Manager存包
 Then：返回一张票
 
-Given：Locker Robot Manager管理1个有可用容量的储物柜，manager不管理robot，待存的包
+2.Given：Locker Robot Manager管理1个有可用容量的储物柜，manager不管理robot，待存的包
 When：Locker Robot Manager存包
 Then：返回一张票
 
-Given：Locker Robot Manager管理2个robot且第一个robot管理的储物柜存在剩余容量，第二个robot管理的储物柜也存在剩余容量，manager管理有可用容量的储物柜，待存的包
+3.Given：Locker Robot Manager管理2个robot且第一个robot管理的储物柜存在剩余容量，第二个robot管理的储物柜也存在剩余容量，manager管理有可用容量的储物柜，待存的包
 When：Locker Robot Manager存包
 Then：返回一张票，包存入第一个robot中
 
-Given：Locker Robot Manager管理2个robot且第一个robot管理的储物柜没有剩余容量，第二个robot管理的储物柜存在剩余容量，manager管理有可用容量的储物柜，待存的包
+4.Given：Locker Robot Manager管理2个robot且第一个robot管理的储物柜没有剩余容量，第二个robot管理的储物柜存在剩余容量，manager管理有可用容量的储物柜，待存的包
 When：Locker Robot Manager存包
 Then：返回一张票，包存入第二个robot中
 
-Given：Locker Robot Manager管理2个robot且第一个robot管理的储物柜没有剩余容量，第二个robot管理的储物柜也没有剩余容量，manager管理两个储物柜，第一个储物柜有可用容量，第二个储物柜有可用容量，待存的包
+5.Given：Locker Robot Manager管理2个robot且第一个robot管理的储物柜没有剩余容量，第二个robot管理的储物柜也没有剩余容量，manager管理两个储物柜，第一个储物柜有可用容量，第二个储物柜有可用容量，待存的包
 When：Locker Robot Manager存包
 Then：返回一张票，包存在第一个locker中
 
-Given：Locker Robot Manager管理2个robot且第一个robot管理的储物柜没有剩余容量，第二个robot管理的储物柜也没有剩余容量，manager管理两个储物柜，第一个储物柜没有可用容量，第二个储物柜有可用容量，待存的包
+6.Given：Locker Robot Manager管理2个robot且第一个robot管理的储物柜没有剩余容量，第二个robot管理的储物柜也没有剩余容量，manager管理两个储物柜，第一个储物柜没有可用容量，第二个储物柜有可用容量，待存的包
 When：Locker Robot Manager存包
 Then：返回一张票，包存在第二个locker中
 
-Given：Locker Robot Manager管理2个robot且robot管理的储物柜没有剩余容量，manager又管理2个储物柜且储物柜没有剩余容量，待存的包
+7.Given：Locker Robot Manager管理2个robot且robot管理的储物柜没有剩余容量，manager又管理2个储物柜且储物柜没有剩余容量，待存的包
 When：Locker Robot Manager存包
 Then：提示储物柜已满，不能存包
 
-Given：Locker Robot Manager管理1个robot，manager管理一个locker，有效票
+8.Given：Locker Robot Manager管理1个robot，manager管理一个locker，有效票
 When：Locker Robot Manager取包
 Then：返回票对应的包
 
-Given：Locker Robot Manager管理1个robot，manager管理一个locker，无效票
+9.Given：Locker Robot Manager管理1个robot，manager管理一个locker，无效票
 When：Locker Robot Manager取包
 Then：提示票无效
