@@ -4,7 +4,6 @@ import com.thoughtworks.locker.exception.FullCapacityException;
 import com.thoughtworks.locker.exception.TicketInvalidException;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -33,8 +32,7 @@ public class LockerRobotManager {
 
     public Bag take(Ticket ticket) {
         return Stream.concat(robots.stream()
-                                   .map(BaseLockerRobot::getLockers)
-                                   .flatMap(Collection::stream),
+                                   .flatMap(robot -> robot.getLockers().stream()),
                              lockers.stream())
                 .filter(locker -> locker.isExist(ticket))
                 .findFirst()
