@@ -3,6 +3,7 @@ package com.thoughtworks.locker;
 import com.thoughtworks.locker.exception.FullCapacityException;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -27,5 +28,16 @@ public class LockerRobotManager {
                 .findFirst()
                 .map(locker -> locker.save(bag))
                 .orElseThrow(FullCapacityException::new);
+    }
+
+    public Bag take(Ticket ticket) {
+        return Stream.concat(robots.stream()
+                                   .map(BaseLockerRobot::getLockers)
+                                   .flatMap(Collection::stream),
+                             lockers.stream())
+                .filter(locker -> locker.isExist(ticket))
+                .findFirst()
+                .map(locker -> locker.take(ticket))
+                .orElse(null);
     }
 }

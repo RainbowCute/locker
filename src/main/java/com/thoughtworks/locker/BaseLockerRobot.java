@@ -2,10 +2,12 @@ package com.thoughtworks.locker;
 
 import com.thoughtworks.locker.exception.FullCapacityException;
 import com.thoughtworks.locker.exception.TicketInvalidException;
+import lombok.Getter;
 
 import java.util.List;
 import java.util.Optional;
 
+@Getter
 public abstract class BaseLockerRobot {
     protected final List<Locker> lockers;
 

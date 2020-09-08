@@ -112,4 +112,17 @@ public class LockerRobotManagerTest {
 
         lockerRobotManager.save(bag);
     }
+
+    @Test
+    public void should_return_bag_successfully_when_locker_robot_manager_save_bag_given_1_robot_and_1_locker_and_valid_ticket() {
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(Collections.singletonList(new Locker(10)));
+        Locker locker = new Locker(10);
+        LockerRobotManager lockerRobotManager = new LockerRobotManager(Collections.singletonList(locker), Collections.singletonList(primaryLockerRobot));
+        Bag bag = new Bag();
+        Ticket ticket = lockerRobotManager.save(bag);
+
+        Bag takenBag = lockerRobotManager.take(ticket);
+
+        assertEquals(bag, takenBag);
+    }
 }
