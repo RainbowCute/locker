@@ -82,6 +82,14 @@ when：SmartLockerRobot取包
 then：提示票无效
 
 ---- locker robot manager
+Given：Locker Robot Manager管理1个有可用容量的robot，manager不管理locker，待存的包
+When：Locker Robot Manager存包
+Then：返回一张票
+
+Given：Locker Robot Manager管理1个有可用容量的储物柜，manager不管理robot，待存的包
+When：Locker Robot Manager存包
+Then：返回一张票
+
 Given：Locker Robot Manager管理2个robot且第一个robot管理的储物柜存在剩余容量，第二个robot管理的储物柜也存在剩余容量，manager管理有可用容量的储物柜，待存的包
 When：Locker Robot Manager存包
 Then：返回一张票，包存入第一个robot中
