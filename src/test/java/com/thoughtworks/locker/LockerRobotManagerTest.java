@@ -32,4 +32,15 @@ public class LockerRobotManagerTest {
 
         assertNotNull(ticket);
     }
+
+    @Test
+    public void should_return_ticket_when_locker_robot_manager_save_bag_given_1_locker_with_free_capacity_and_bag() {
+        Locker locker = new Locker(10);
+        LockerRobotManager lockerRobotManager = new LockerRobotManager(Collections.singletonList(locker), null);
+        Bag bag = new Bag();
+
+        Ticket ticket = lockerRobotManager.save(bag);
+
+        assertNotNull(ticket);
+    }
 }
