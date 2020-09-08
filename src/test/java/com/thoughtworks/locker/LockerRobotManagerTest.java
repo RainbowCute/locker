@@ -1,6 +1,7 @@
 package com.thoughtworks.locker;
 
 import com.thoughtworks.locker.exception.FullCapacityException;
+import com.thoughtworks.locker.exception.TicketInvalidException;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -114,7 +115,7 @@ public class LockerRobotManagerTest {
     }
 
     @Test
-    public void should_return_bag_successfully_when_locker_robot_manager_save_bag_given_1_robot_and_1_locker_and_valid_ticket() {
+    public void should_return_bag_successfully_when_locker_robot_manager_take_bag_given_1_robot_and_1_locker_and_valid_ticket() {
         PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(Collections.singletonList(new Locker(10)));
         Locker locker = new Locker(10);
         LockerRobotManager lockerRobotManager = new LockerRobotManager(Collections.singletonList(locker), Collections.singletonList(primaryLockerRobot));
@@ -124,5 +125,17 @@ public class LockerRobotManagerTest {
         Bag takenBag = lockerRobotManager.take(ticket);
 
         assertEquals(bag, takenBag);
+    }
+
+    @Test(expected = TicketInvalidException.class)
+    public void should_throw_ticket_invalid_exception_when_locker_robot_manager_take_bag_given_1_robot_and_1_locker_and_invalid_ticket() {
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(Collections.singletonList(new Locker(10)));
+        Locker locker = new Locker(10);
+        LockerRobotManager lockerRobotManager = new LockerRobotManager(Collections.singletonList(locker), Collections.singletonList(primaryLockerRobot));
+        Bag bag = new Bag();
+        lockerRobotManager.save(bag);
+        Ticket invalidTicket = new Ticket();
+
+        lockerRobotManager.take(invalidTicket);
     }
 }
