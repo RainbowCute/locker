@@ -21,7 +21,7 @@ public class LockerRobotManager {
         return Stream.concat(robots.stream()
                                    .filter(robot -> robot.getAvailableLocker().isPresent())
                                    .map(robot -> robot.getAvailableLocker().get()),
-                             lockers.stream())
+                             lockers.stream().filter(Locker::isNotFull))
                 .findFirst()
                 .map(locker -> locker.save(bag))
                 .orElse(null);
