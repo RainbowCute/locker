@@ -47,4 +47,8 @@ public class Locker implements Storable{
     public int getFreeCapacity() {
         return capacity - ticketBagMap.size();
     }
+
+    public int getCapacity() {
+        return capacity;
+    }
 }
