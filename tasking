@@ -120,19 +120,27 @@ Then：提示票无效
 
 
 ---- locker robot director
-1.given: 一个locker robot manager, 管理1个总容量是10， 可用容量是5的locker
+1.given: 一个locker robot manager, 管理2个locker，其中一个locker总容量是10，可用容量是5，另一个locker总容量是8，可用容量是3
 when：locker robot director统计报表
-then：M可用容量5，总容量10，ML可用容量5，总容量10
+then：M可用容量8，总容量18，ML1可用容量5，总容量10，ML2可用容量3，总容量8
 
-2.given: 一个locker robot manager, 管理1个robot，robot管理一个总容量是10， 可用容量是5的locker
+2.given: 一个locker robot manager, 管理2个robot，其中第一个robot管理一个总容量是10， 可用容量是5的locker，第二个robot管理一个总容量是9， 可用容量是4的locker
 when：locker robot director统计报表
-then：M可用容量5，总容量10，MR可用容量5，总容量10，MRL可用容量5，总容量10
+then：M可用容量9，总容量19，MR1可用容量5，总容量10，MR1L可用容量5，总容量10，MR2可用容量4，总容量9，MR2L可用容量4，总容量9
 
-3.given: 一个locker robot manager, manager管理1个robot，robot管理一个总容量是10， 可用容量是5的locker，manager还管理1个总容量是10， 可用容量是5的locker
+3.given: 一个locker robot manager, 管理1个robot，robot管理两个locker，第一个locker总容量是8，可用容量是3，第二个locker总容量是11，可用容量是6
+when：locker robot director统计报表
+then：M可用容量9，总容量19，MR可用容量9，总容量19，MRL1可用容量3，总容量8，MRL2可用容量6，总容量11
+
+4.given: 一个locker robot manager, manager管理1个robot，robot管理一个总容量是10， 可用容量是5的locker，manager还管理1个总容量是10， 可用容量是5的locker
 when：locker robot director统计报表
 then：M可用容量10，总容量20，MR可用容量5，总容量10，MRL可用容量5，总容量10，ML可用容量是5，总容量是10
 
-4.given: 两个locker robot manager, 第一个manager管理1个robot，robot管理一个总容量是10， 可用容量是5的locker，manager还管理1个总容量是10， 可用容量是5的locker，
+5.given: 一个locker robot manager,一个总容量是10，可用容量是5的locker，一个总容量是10，可用容量是5的robot, manager管理1个robot，robot管理一个总容量是10，可用容量是5的locker，manager还管理1个总容量是10， 可用容量是5的locker
+when：locker robot director统计报表
+then：M可用容量10，总容量20，MR可用容量5，总容量10，MRL可用容量5，总容量10，ML可用容量是5，总容量是10
+
+6.given: 两个locker robot manager, 第一个manager管理1个robot，robot管理一个总容量是10， 可用容量是5的locker，manager还管理1个总容量是10， 可用容量是5的locker，
 第一个manager管理1个robot，robot管理一个总容量是15， 可用容量是5的locker，manager还管理1个总容量是15， 可用容量是5的locker
 when：locker robot director统计报表
 then：M1可用容量10，总容量20，M1R可用容量5，总容量10，M1RL可用容量5，总容量10，M1L可用容量是5，总容量是10；
