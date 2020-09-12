@@ -117,3 +117,23 @@ Then：返回票对应的包
 9.Given：Locker Robot Manager管理1个robot，manager管理一个locker，无效票
 When：Locker Robot Manager取包
 Then：提示票无效
+
+
+---- locker robot director
+1.given: 一个locker robot manager, 管理1个总容量是10， 可用容量是5的locker
+when：locker robot director统计报表
+then：M可用容量5，总容量10，ML可用容量5，总容量10
+
+2.given: 一个locker robot manager, 管理1个robot，robot管理一个总容量是10， 可用容量是5的locker
+when：locker robot director统计报表
+then：M可用容量5，总容量10，MR可用容量5，总容量10，MRL可用容量5，总容量10
+
+3.given: 一个locker robot manager, manager管理1个robot，robot管理一个总容量是10， 可用容量是5的locker，manager还管理1个总容量是10， 可用容量是5的locker
+when：locker robot director统计报表
+then：M可用容量10，总容量20，MR可用容量5，总容量10，MRL可用容量5，总容量10，ML可用容量是5，总容量是10
+
+4.given: 两个locker robot manager, 第一个manager管理1个robot，robot管理一个总容量是10， 可用容量是5的locker，manager还管理1个总容量是10， 可用容量是5的locker，
+第一个manager管理1个robot，robot管理一个总容量是15， 可用容量是5的locker，manager还管理1个总容量是15， 可用容量是5的locker
+when：locker robot director统计报表
+then：M1可用容量10，总容量20，M1R可用容量5，总容量10，M1RL可用容量5，总容量10，M1L可用容量是5，总容量是10；
+M2可用容量10，总容量30，M2R可用容量5，总容量15，M2RL可用容量5，总容量15，M2L可用容量是5，总容量是15

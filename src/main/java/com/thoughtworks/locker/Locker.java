@@ -6,7 +6,7 @@ import com.thoughtworks.locker.exception.TicketInvalidException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Locker {
+public class Locker implements Storable{
     private final int capacity;
     private final Map<Ticket, Bag> ticketBagMap = new HashMap<>();
 
@@ -15,7 +15,7 @@ public class Locker {
     }
 
     public Ticket save(Bag bag) {
-        if (!isNotFull()) {
+        if (isFull()) {
             throw new FullCapacityException();
         }
 
@@ -34,10 +34,12 @@ public class Locker {
         return bag;
     }
 
-    public boolean isNotFull() {
-        return ticketBagMap.size() < capacity;
+    @Override
+    public boolean isFull() {
+        return ticketBagMap.size() >= capacity;
     }
 
+    @Override
     public boolean isExist(Ticket ticket) {
         return ticketBagMap.containsKey(ticket);
     }

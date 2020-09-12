@@ -2,6 +2,9 @@ package com.thoughtworks.locker;
 
 import com.thoughtworks.locker.exception.FullCapacityException;
 import com.thoughtworks.locker.exception.TicketInvalidException;
+import com.thoughtworks.locker.robot.BaseLockerRobot;
+import com.thoughtworks.locker.robot.PrimaryLockerRobot;
+import com.thoughtworks.locker.robot.SmartLockerRobot;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -23,6 +26,7 @@ public class LockerRobotManagerTest {
         Ticket ticket = lockerRobotManager.save(bag);
 
         assertNotNull(ticket);
+        assertEquals(bag, firstRobot.take(ticket));
     }
 
     @Test

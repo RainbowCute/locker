@@ -1,5 +1,8 @@
-package com.thoughtworks.locker;
+package com.thoughtworks.locker.robot;
 
+import com.thoughtworks.locker.Bag;
+import com.thoughtworks.locker.Locker;
+import com.thoughtworks.locker.Ticket;
 import com.thoughtworks.locker.exception.FullCapacityException;
 import com.thoughtworks.locker.exception.TicketInvalidException;
 import org.junit.Test;

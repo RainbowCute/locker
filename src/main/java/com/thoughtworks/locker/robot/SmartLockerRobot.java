@@ -1,4 +1,6 @@
-package com.thoughtworks.locker;
+package com.thoughtworks.locker.robot;
+
+import com.thoughtworks.locker.Locker;
 
 import java.util.Comparator;
 import java.util.List;
@@ -12,7 +14,7 @@ public class SmartLockerRobot extends BaseLockerRobot {
     @Override
     public Optional<Locker> getAvailableLocker() {
         return lockers.stream()
-                .filter(Locker::isNotFull)
+                .filter(locker -> !locker.isFull())
                 .max(Comparator.comparing(Locker::getFreeCapacity));
     }
 }

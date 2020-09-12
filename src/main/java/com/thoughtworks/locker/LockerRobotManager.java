@@ -2,40 +2,33 @@ package com.thoughtworks.locker;
 
 import com.thoughtworks.locker.exception.FullCapacityException;
 import com.thoughtworks.locker.exception.TicketInvalidException;
+import com.thoughtworks.locker.robot.BaseLockerRobot;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class LockerRobotManager {
-    private List<Locker> lockers = new ArrayList<>();
-    private List<BaseLockerRobot> robots = new ArrayList<>();
+    private List<Storable> storables = new ArrayList<>();
 
     public LockerRobotManager(List<Locker> lockers, List<BaseLockerRobot> robots) {
-        if (lockers != null) {
-            this.lockers = lockers;
-        }
         if (robots != null) {
-            this.robots = robots;
+            storables.addAll(robots);
+        }
+        if (lockers != null) {
+            storables.addAll(lockers);
         }
     }
 
     public Ticket save(Bag bag) {
-        return Stream.concat(robots.stream()
-                                   .filter(robot -> robot.getAvailableLocker().isPresent())
-                                   .map(robot -> robot.getAvailableLocker().get()),
-                             lockers.stream().filter(Locker::isNotFull))
+        return  storables.stream()
+                .filter(storable -> !storable.isFull())
                 .findFirst()
                 .map(locker -> locker.save(bag))
                 .orElseThrow(FullCapacityException::new);
     }
 
     public Bag take(Ticket ticket) {
-        return Stream.concat(robots.stream()
-                                   .map(BaseLockerRobot::getLockers)
-                                   .flatMap(Collection::stream),
-                             lockers.stream())
+        return  storables.stream()
                 .filter(locker -> locker.isExist(ticket))
                 .findFirst()
                 .map(locker -> locker.take(ticket))
