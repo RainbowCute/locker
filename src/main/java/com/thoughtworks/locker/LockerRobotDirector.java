@@ -6,33 +6,39 @@ import com.thoughtworks.locker.report.CapacityItem;
 import com.thoughtworks.locker.report.ManagerCapacityReport;
 import com.thoughtworks.locker.robot.BaseLockerRobot;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class LockerRobotDirector {
 
-    private final LockerRobotManager lockerRobotManager;
+    private final List<LockerRobotManager> lockerRobotManagers;
     private final List<Storable> storables;
 
-    public LockerRobotDirector(LockerRobotManager lockerRobotManager, List<Storable> storables) {
-        this.lockerRobotManager = lockerRobotManager;
+    public LockerRobotDirector(List<LockerRobotManager> lockerRobotManagers, List<Storable> storables) {
+        this.lockerRobotManagers = lockerRobotManagers;
         this.storables = storables;
     }
 
     public ManagerCapacityReport countCapacityReport() {
+        List<CapacityItem> capacityItemList = lockerRobotManagers.stream()
+                .map(this::getManagerCapacityItem)
+                .collect(Collectors.toList());
+        return ManagerCapacityReport.from(capacityItemList);
+    }
+
+    private CapacityItem getManagerCapacityItem(LockerRobotManager lockerRobotManager) {
         List<BaseLockerRobot> robots = lockerRobotManager.getRobots();
         List<Locker> lockers = lockerRobotManager.getLockers();
 
         List<CapacityItem> capacityItems = Stream.concat(robots.stream()
-                                                                    .map(robot -> getCapacityItemFromChildren(robot.getLockers())),
-                                                             from(lockers).stream())
-                                                      .collect(Collectors.toList());
+                                                               .map(robot -> getCapacityItemFromChildren(robot.getLockers())),
+                                                         from(lockers).stream())
+                                                 .collect(Collectors.toList());
 
         Capacity managerCapacity = getCapacityFromChildren(capacityItems, CapacityTitle.M);
 
-        return ManagerCapacityReport.from(Collections.singletonList(CapacityItem.from(managerCapacity, capacityItems)));
+        return CapacityItem.from(managerCapacity, capacityItems);
     }
 
     private CapacityItem getCapacityItemFromChildren(List<Locker> lockers) {
