@@ -13,7 +13,15 @@ import java.util.stream.Stream;
 
 public class LockerRobotDirector {
 
-    public ManagerCapacityReport countCapacityReport(LockerRobotManager lockerRobotManager) {
+    private final LockerRobotManager lockerRobotManager;
+    private final List<Storable> storables;
+
+    public LockerRobotDirector(LockerRobotManager lockerRobotManager, List<Storable> storables) {
+        this.lockerRobotManager = lockerRobotManager;
+        this.storables = storables;
+    }
+
+    public ManagerCapacityReport countCapacityReport() {
         List<BaseLockerRobot> robots = lockerRobotManager.getRobots();
         List<Locker> lockers = lockerRobotManager.getLockers();
 

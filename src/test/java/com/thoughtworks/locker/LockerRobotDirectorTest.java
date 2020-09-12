@@ -23,9 +23,9 @@ public class LockerRobotDirectorTest {
         initFreeCapacity(firstLocker, 5);
         initFreeCapacity(secondLocker, 3);
         LockerRobotManager lockerRobotManager = new LockerRobotManager(Arrays.asList(firstLocker, secondLocker), null);
-        LockerRobotDirector lockerRobotDirector = new LockerRobotDirector();
+        LockerRobotDirector lockerRobotDirector = new LockerRobotDirector(lockerRobotManager, null);
 
-        ManagerCapacityReport managerCapacityReport = lockerRobotDirector.countCapacityReport(lockerRobotManager);
+        ManagerCapacityReport managerCapacityReport = lockerRobotDirector.countCapacityReport();
 
         Capacity managerCapacity = managerCapacityReport.getCapacityItems().get(0).getCapacity();
         List<CapacityItem> lockerCapacityOfManager = managerCapacityReport.getCapacityItems().get(0).getChildrenCapacity();
@@ -53,9 +53,9 @@ public class LockerRobotDirectorTest {
         PrimaryLockerRobot firstLockerRobot = new PrimaryLockerRobot(Collections.singletonList(firstRobotManagedLocker));
         PrimaryLockerRobot secondLockerRobot = new PrimaryLockerRobot(Collections.singletonList(secondRobotManagedLocker));
         LockerRobotManager lockerRobotManager = new LockerRobotManager(null, Arrays.asList(firstLockerRobot, secondLockerRobot));
-        LockerRobotDirector lockerRobotDirector = new LockerRobotDirector();
+        LockerRobotDirector lockerRobotDirector = new LockerRobotDirector(lockerRobotManager, null);
 
-        ManagerCapacityReport managerCapacityReport = lockerRobotDirector.countCapacityReport(lockerRobotManager);
+        ManagerCapacityReport managerCapacityReport = lockerRobotDirector.countCapacityReport();
 
         Capacity managerCapacity = managerCapacityReport.getCapacityItems().get(0).getCapacity();
         List<CapacityItem> robotCapacitiesOfManager = managerCapacityReport.getCapacityItems().get(0).getChildrenCapacity();
@@ -91,9 +91,9 @@ public class LockerRobotDirectorTest {
         initFreeCapacity(secondLocker, 6);
         PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(Arrays.asList(firstLocker, secondLocker));
         LockerRobotManager lockerRobotManager = new LockerRobotManager(null, Collections.singletonList(primaryLockerRobot));
-        LockerRobotDirector lockerRobotDirector = new LockerRobotDirector();
+        LockerRobotDirector lockerRobotDirector = new LockerRobotDirector(lockerRobotManager, null);
 
-        ManagerCapacityReport managerCapacityReport = lockerRobotDirector.countCapacityReport(lockerRobotManager);
+        ManagerCapacityReport managerCapacityReport = lockerRobotDirector.countCapacityReport();
 
         Capacity managerCapacity = managerCapacityReport.getCapacityItems().get(0).getCapacity();
         List<CapacityItem> childrenCapacityOfManager = managerCapacityReport.getCapacityItems().get(0).getChildrenCapacity();
@@ -124,9 +124,48 @@ public class LockerRobotDirectorTest {
         initFreeCapacity(locker, 5);
         PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(Collections.singletonList(robotManagedLocker));
         LockerRobotManager lockerRobotManager = new LockerRobotManager(Collections.singletonList(locker), Collections.singletonList(primaryLockerRobot));
-        LockerRobotDirector lockerRobotDirector = new LockerRobotDirector();
+        LockerRobotDirector lockerRobotDirector = new LockerRobotDirector(lockerRobotManager, null);
 
-        ManagerCapacityReport managerCapacityReport = lockerRobotDirector.countCapacityReport(lockerRobotManager);
+        ManagerCapacityReport managerCapacityReport = lockerRobotDirector.countCapacityReport();
+
+        CapacityItem managerCapacityItem = managerCapacityReport.getCapacityItems().get(0);
+        CapacityItem robotCapacityOfManager = managerCapacityItem.getChildrenCapacity().get(0);
+        CapacityItem lockerCapacityOfManager = managerCapacityItem.getChildrenCapacity().get(1);
+        Capacity lockerCapacityOfRobot = robotCapacityOfManager.getChildrenCapacity().get(0).getCapacity();
+        assertNotNull(managerCapacityReport);
+        assertEquals(1, managerCapacityReport.getCapacityItems().size());
+        assertEquals(CapacityTitle.M, managerCapacityItem.getCapacity().getTitle());
+        assertEquals(10, managerCapacityItem.getCapacity().getFreeCapacity());
+        assertEquals(20, managerCapacityItem.getCapacity().getTotalCapacity());
+        assertEquals(2, managerCapacityItem.getChildrenCapacity().size());
+        assertEquals(CapacityTitle.R, robotCapacityOfManager.getCapacity().getTitle());
+        assertEquals(5, robotCapacityOfManager.getCapacity().getFreeCapacity());
+        assertEquals(10, robotCapacityOfManager.getCapacity().getTotalCapacity());
+        assertEquals(1, robotCapacityOfManager.getChildrenCapacity().size());
+        assertEquals(CapacityTitle.L, lockerCapacityOfRobot.getTitle());
+        assertEquals(5, lockerCapacityOfRobot.getFreeCapacity());
+        assertEquals(10, lockerCapacityOfRobot.getTotalCapacity());
+        assertEquals(CapacityTitle.L, lockerCapacityOfManager.getCapacity().getTitle());
+        assertEquals(5, lockerCapacityOfManager.getCapacity().getFreeCapacity());
+        assertEquals(10, lockerCapacityOfManager.getCapacity().getTotalCapacity());
+    }
+
+    @Test
+    public void should_return_successful_result_when_director_count_report_given_1_locker_and_1_robot_and_1_manager_manage_1_locker_and_1_robot_with_1_locker() {
+        Locker robotManagedLocker = new Locker(10);
+        Locker locker = new Locker(10);
+        Locker notManagedLocker = new Locker(10);
+        Locker notManagedRobotLocker = new Locker(10);
+        initFreeCapacity(robotManagedLocker, 5);
+        initFreeCapacity(locker, 5);
+        initFreeCapacity(notManagedLocker, 5);
+        initFreeCapacity(notManagedRobotLocker, 5);
+        PrimaryLockerRobot notManagedLockerRobot = new PrimaryLockerRobot(Collections.singletonList(notManagedRobotLocker));
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(Collections.singletonList(robotManagedLocker));
+        LockerRobotManager lockerRobotManager = new LockerRobotManager(Collections.singletonList(locker), Collections.singletonList(primaryLockerRobot));
+        LockerRobotDirector lockerRobotDirector = new LockerRobotDirector(lockerRobotManager, Arrays.asList(notManagedLocker, notManagedLockerRobot));
+
+        ManagerCapacityReport managerCapacityReport = lockerRobotDirector.countCapacityReport();
 
         CapacityItem managerCapacityItem = managerCapacityReport.getCapacityItems().get(0);
         CapacityItem robotCapacityOfManager = managerCapacityItem.getChildrenCapacity().get(0);
