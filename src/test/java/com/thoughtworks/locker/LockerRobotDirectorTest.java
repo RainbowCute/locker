@@ -4,6 +4,7 @@ import com.thoughtworks.locker.enums.CapacityTitle;
 import com.thoughtworks.locker.report.Capacity;
 import com.thoughtworks.locker.report.CapacityItem;
 import com.thoughtworks.locker.report.ManagerCapacityReport;
+import com.thoughtworks.locker.robot.PrimaryLockerRobot;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -40,6 +41,45 @@ public class LockerRobotDirectorTest {
         assertEquals(3, lockerCapacityOfManager.get(1).getCapacity().getFreeCapacity());
         assertEquals(8, lockerCapacityOfManager.get(1).getCapacity().getTotalCapacity());
 
+    }
+
+    @Test
+    public void should_return_correct_result_when_director_count_report_given_locker_robot_manager_manage_two_robots() {
+        Locker firstRobotManagedLocker = new Locker(10);
+        Locker secondRobotManagedLocker = new Locker(9);
+        initFreeCapacity(firstRobotManagedLocker, 5);
+        initFreeCapacity(secondRobotManagedLocker, 4);
+        PrimaryLockerRobot firstLockerRobot = new PrimaryLockerRobot(Arrays.asList(firstRobotManagedLocker));
+        PrimaryLockerRobot secondLockerRobot = new PrimaryLockerRobot(Arrays.asList(secondRobotManagedLocker));
+        LockerRobotManager lockerRobotManager = new LockerRobotManager(null, Arrays.asList(firstLockerRobot, secondLockerRobot));
+        LockerRobotDirector lockerRobotDirector = new LockerRobotDirector();
+
+        ManagerCapacityReport managerCapacityReport = lockerRobotDirector.countCapacityReport(lockerRobotManager);
+
+        Capacity managerCapacity = managerCapacityReport.getCapacityItems().get(0).getCapacity();
+        List<CapacityItem> robotCapacitiesOfManager = managerCapacityReport.getCapacityItems().get(0).getChildrenCapacity();
+        List<CapacityItem> lockerCapacitiesOfFirstRobot = robotCapacitiesOfManager.get(0).getChildrenCapacity();
+        List<CapacityItem> lockerCapacitiesOfSecondRobot = robotCapacitiesOfManager.get(1).getChildrenCapacity();
+        assertNotNull(managerCapacityReport);
+        assertEquals(1, managerCapacityReport.getCapacityItems().size());
+        assertEquals(CapacityTitle.M, managerCapacity.getTitle());
+        assertEquals(9, managerCapacity.getFreeCapacity());
+        assertEquals(19, managerCapacity.getTotalCapacity());
+        assertEquals(2, robotCapacitiesOfManager.size());
+        assertEquals(CapacityTitle.R, robotCapacitiesOfManager.get(0).getCapacity().getTitle());
+        assertEquals(5, robotCapacitiesOfManager.get(0).getCapacity().getFreeCapacity());
+        assertEquals(10, robotCapacitiesOfManager.get(0).getCapacity().getTotalCapacity());
+        assertEquals(1, lockerCapacitiesOfFirstRobot.size());
+        assertEquals(CapacityTitle.L, lockerCapacitiesOfFirstRobot.get(0).getCapacity().getTitle());
+        assertEquals(5, lockerCapacitiesOfFirstRobot.get(0).getCapacity().getFreeCapacity());
+        assertEquals(10, lockerCapacitiesOfFirstRobot.get(0).getCapacity().getTotalCapacity());
+        assertEquals(CapacityTitle.R, robotCapacitiesOfManager.get(1).getCapacity().getTitle());
+        assertEquals(4, robotCapacitiesOfManager.get(1).getCapacity().getFreeCapacity());
+        assertEquals(9, robotCapacitiesOfManager.get(1).getCapacity().getTotalCapacity());
+        assertEquals(1, lockerCapacitiesOfSecondRobot.size());
+        assertEquals(CapacityTitle.L, lockerCapacitiesOfSecondRobot.get(0).getCapacity().getTitle());
+        assertEquals(4, lockerCapacitiesOfSecondRobot.get(0).getCapacity().getFreeCapacity());
+        assertEquals(9, lockerCapacitiesOfSecondRobot.get(0).getCapacity().getTotalCapacity());
     }
 
     private void initFreeCapacity(Locker locker, int freeCapacity) {
